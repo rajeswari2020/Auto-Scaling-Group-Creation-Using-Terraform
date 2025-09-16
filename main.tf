@@ -3,15 +3,12 @@ provider "aws" {
 }
 
 data "aws_vpc" "selected" {
-  filter{
-    name = "tag.Name"
-    values = [var.vpc_name]
-  }
+  id = var.vpc_id
 }
 
 data "aws_subnets" "selected" {
   filter{
-    name = "vpc_id"
+    name = "vpc-id"
     values = [data.aws_vpc.selected.id]
   }
 }
@@ -56,14 +53,15 @@ resource "aws_launch_template" "web_template" {
      sudo apt update -y 
      sudo apt install nginx -y 
      sudo systemctl start nginx 
-  EOF)
+  EOF
+  )
 
   block_device_mappings {
       device_name = "/dev/xvda"
       ebs{
         volume_size = var.volume_size
         volume_type = "gp2"
-        deletion_on_termination = true
+        delete_on_termination = true
       }
   }
 

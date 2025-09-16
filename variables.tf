@@ -4,10 +4,8 @@ variable "region" {
     default     = "ap-south-1"
 }
 
-variable "vpc_name" {
-    description = "Name tag of the VPC "
-    type        = string
-    default      = "demo-vpc"
+variable "vpc_id" {
+  default = "vpc-02cbfe15b6013f4e5"
 }
 
 variable "ami_id" {
